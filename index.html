@@ -86,6 +86,7 @@
     <h2 class="form-title">¡Registrate Rapidamente!</h2>
 
     <form id="registro" novalidate>
+        <label for="seleccionar tipo de entidad">Selecciona el tipo de entidad</label>
       <div class="fields">
         <div class="row g-3 mb-2">
           <div class="col-md-6">
@@ -98,40 +99,51 @@
             </select>
           </div>
           <div class="col-md-6">
-            <input type="text" class="form-control" name="entidad" placeholder="Entidad / Empresa" required>
+            <label for="nombre de la entidad/Empresa">Nombre de la entidad / Empresa:</label>
+
+            <input type="text" class="form-control" name="entidad" placeholder="Abarrotes Juan" required>
           </div>
         </div>
 
         <div class="row g-3 mb-2">
           <div class="col-md-6">
-            <input type="text" class="form-control" name="nombre" placeholder="Nombre / Nome" required>
+            <label for="Nombre:">Nombre:</label>
+            <input type="text" class="form-control" name="nombre" placeholder="Juan" required>
           </div>
           <div class="col-md-6">
-            <input type="text" class="form-control" name="apellido" placeholder="Apellido / Sobrenome" required>
+            <label for="apellido">Apellido:</label>
+
+            <input type="text" class="form-control" name="apellido" placeholder="Lopez" required>
           </div>
         </div>
 
         <div class="row g-3 mb-2">
           <div class="col-12">
-            <input type="text" class="form-control" name="ciudad" placeholder="Ciudad / Cidade" required>
+
+            <label for="ciudad">Ciudad:</label>
+            <input type="text" class="form-control" name="ciudad" placeholder="Ciudad de Mexico" required>
           </div>
         </div>
 
         <div class="row g-3 mb-2">
           <div class="col-md-2">
+            <label for="indicativo">Indicativo:</label>
             <input type="text" class="form-control" name="indicativo" placeholder="Indicativo">
           </div>
           <div class="col-md-8">
-            <input type="tel" class="form-control" name="telefono" placeholder="Teléfono / Celular / Fone" required>
+            <label for="telefono / Celular">Telefono:</label>
+            <input type="tel" class="form-control" name="telefono" placeholder="+52 123 456 78" required>
           </div>
           <div class="col-md-2">
-            <input type="text" class="form-control" name="ext" placeholder="Ext./Anexo/Extensão">
+            <label for="numero de casa ext">Numero ext. de casa:</label>
+            <input type="text" class="form-control" name="ext" placeholder="123">
           </div>
         </div>
 
         <div class="row g-3">
           <div class="col-12">
-            <input type="email" class="form-control" name="email" placeholder="E-mail" required>
+            <label for="E-mail">E-mail:</label>
+            <input type="email" class="form-control" name="email" placeholder="AbarrotesJuan@gmail.com" required>
           </div>
         </div>
       </div>
@@ -152,7 +164,7 @@
     </form>
 
     <div class="politicas">
-      Conozca nuestras políticas de tratamiento de datos <a href="#">aquí</a>
+      Conozca nuestras políticas de tratamiento de datos <a href="#" class="text-decoration-underline" >aquí</a>
     </div>
   </main>
 
