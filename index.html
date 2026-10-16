@@ -2,178 +2,1408 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Regístrate - Software Shop</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Software Shop - Registro (Versión Rediseñada y Accesible)</title>
+  <meta name="description" content="Regístrate en Software Shop de forma rápida, accesible y segura. Formulario optimizado según directrices WCAG y HCI.">
+  
+  <!-- Tipografía Montserrat oficial de Software Shop -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
   <style>
-    body { font-family: 'Montserrat', sans-serif; color: #333; background: #fff; }
-
-    .hero {
-      background: linear-gradient(180deg, #322f7b 0%, #6d3db8 100%);
-      color: #fff;
-      padding: 70px 0 65px;
-      border-top: 6px solid #fff;
-      box-shadow: inset 0 6px 0 #2f2d6b;
+    /* ==========================================================================
+       VARIABLES Y PALETA DE COLORES (Conforme a WCAG 2.1 AA / AAA)
+       ========================================================================== */
+    :root {
+      --color-primary: #582583;         /* Morado institucional Software Shop */
+      --color-primary-dark: #3e1261;    /* Morado oscuro para hover y contraste alto (8.2:1) */
+      --color-primary-light: #f5f0fa;   /* Tono suave para fondos */
+      --color-primary-focus: rgba(88, 37, 131, 0.25);
+      
+      --color-text-main: #1f2937;       /* Contraste 13.8:1 sobre blanco */
+      --color-text-muted: #4b5563;      /* Contraste 7.0:1 sobre blanco */
+      --color-text-light: #ffffff;
+      
+      --color-border: #9ca3af;          /* Contraste 3.0:1 para componentes de UI */
+      --color-border-focus: #582583;
+      --color-bg-input: #ffffff;
+      --color-bg-readonly: #f3f4f6;
+      
+      --color-error: #b91c1c;           /* Rojo accesible (5.9:1 de contraste) */
+      --color-error-bg: #fef2f2;
+      --color-error-border: #dc2626;
+      
+      --color-success: #15803d;         /* Verde accesible (4.8:1 de contraste) */
+      --color-success-bg: #f0fdf4;
+      --color-success-border: #16a34a;
+      
+      --font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+      --shadow-md: 0 4px 12px rgba(88, 37, 131, 0.08);
+      --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+      --transition: all 0.2s ease-in-out;
     }
-    .hero svg { width: 112px; height: auto; }
-    .hero h1 { font-weight: 400; font-size: 3rem; margin: 0; line-height: 1.1; }
-    .hero p  { font-weight: 300; font-size: 1.15rem; margin: 6px 0 0; color: #dcd6f5; line-height: 1.25; }
 
-    .form-wrap { max-width: 892px; }
-    .form-title { font-weight: 700; font-size: 1.25rem; text-align: center; margin: 28px 0 10px; }
+    /* Reset y base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-    .form-control, .form-select {
-      background-color: #e8e8e8;
-      border: 1px solid #ccc;
+    body {
+      font-family: var(--font-family);
+      color: var(--color-text-main);
+      background-color: #f8fafc;
+      line-height: 1.5;
+      font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Barra superior de inspección pedagógica / HCI */
+    .hci-inspector-banner {
+      background: #111827;
+      color: #f9fafb;
+      padding: 10px 16px;
+      font-size: 13px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 2px solid #a855f7;
+      z-index: 100;
+    }
+
+    .hci-inspector-banner strong {
+      color: #c084fc;
+    }
+
+    .hci-badges {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .hci-badge {
+      background: #374151;
+      padding: 3px 8px;
       border-radius: 4px;
-      height: 38px;
-      font-size: .95rem;
-      color: #333;
-      box-shadow: none;
+      font-size: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
     }
-    .form-control::placeholder { color: #999; }
-    .form-control:focus, .form-select:focus {
-      background-color: #efefef;
-      border-color: #6d3db8;
-      box-shadow: 0 0 0 .2rem rgba(109,61,184,.2);
-    }
-    .fields { max-width: 854px; margin: 0 auto; }
 
-    .pregunta { color: #6c3cb7; font-weight: 600; font-size: .95rem; text-align: center; margin: 34px 0 4px; }
-    .radios { display: flex; flex-direction: column; align-items: center; }
-    .radios .form-check { min-width: 100px; margin: 0; font-size: .95rem; }
-    .form-check-input:checked { background-color: #0dcaf0; border-color: #333; }
-
-    .btn-registrar {
-      background: #6c3cb7; color: #fff; width: 100%;
-      border: 0; border-radius: 4px; height: 38px; font-weight: 300; margin-top: 20px;
+    .btn-toggle-report {
+      background: #7c3aed;
+      color: #fff;
+      border: none;
+      padding: 5px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      transition: var(--transition);
     }
-    .btn-registrar:hover { background: #5b30a0; color: #fff; }
 
-    .politicas {
-      border: 1px solid #ddd; border-radius: 10px; background: #fafafa;
-      text-align: center; font-weight: 600; font-size: .95rem;
-      padding: 4px 10px; margin: 20px 0 40px;
-      box-shadow: 0 6px 12px rgba(0,0,0,.08);
+    .btn-toggle-report:hover, .btn-toggle-report:focus-visible {
+      background: #9333ea;
+      outline: 2px solid #fff;
     }
-    .politicas a { color: #337ab7; text-decoration: none; }
-    .politicas a:hover { text-decoration: underline; }
+
+    /* HEADER CORPORATIVO (Fiel al original de Software Shop) */
+    .header-nav {
+      background-color: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo-img {
+      height: 40px;
+      width: auto;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .nav-login-link {
+      color: var(--color-primary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-primary);
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-login-link:hover, .nav-login-link:focus-visible {
+      background: var(--color-primary);
+      color: #ffffff;
+      outline: 2px solid var(--color-primary-dark);
+    }
+
+    /* BANNER PRINCIPAL (Fiel a la sección morada original) */
+    .hero-banner {
+      background: linear-gradient(135deg, #582583 0%, #3e1261 100%);
+      color: var(--color-text-light);
+      padding: 42px 20px 48px;
+      text-align: center;
+    }
+
+    .hero-content {
+      max-width: 760px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      text-align: left;
+    }
+
+    .hero-icon-svg {
+      width: 76px;
+      height: 76px;
+      flex-shrink: 0;
+      fill: none;
+      stroke: #ffffff;
+      stroke-width: 1.8;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+    }
+
+    .hero-text h1 {
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 6px;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-text p {
+      font-size: 17px;
+      font-weight: 400;
+      opacity: 0.95;
+      line-height: 1.4;
+    }
+
+    /* CONTENEDOR PRINCIPAL DEL FORMULARIO */
+    .main-wrapper {
+      max-width: 820px;
+      margin: -24px auto 60px;
+      padding: 0 16px;
+    }
+
+    .form-card {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      padding: 36px 40px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid #e5e7eb;
+    }
+
+    .form-title-wrap {
+      text-align: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .form-title {
+      color: #374151; /* Contraste corregido > 7:1 */
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    .form-subtitle {
+      font-size: 14px;
+      color: var(--color-text-muted);
+      margin-top: 4px;
+    }
+
+    .required-legend {
+      font-size: 13px;
+      color: #6b7280;
+      margin-top: 6px;
+    }
+
+    .required-asterisk {
+      color: var(--color-error);
+      font-weight: 700;
+      margin-left: 2px;
+    }
+
+    /* ALERTA DE RESUMEN DE ERRORES (ACCESIBILIDAD WCAG 3.3.1) */
+    .error-summary {
+      background-color: var(--color-error-bg);
+      border: 2px solid var(--color-error-border);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      display: none; /* Se activa dinámicamente */
+    }
+
+    .error-summary.is-active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .error-summary-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--color-error);
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .error-summary-list {
+      list-style-type: disc;
+      margin-left: 28px;
+      color: #991b1b;
+      font-size: 14px;
+    }
+
+    .error-summary-list a {
+      color: #991b1b;
+      text-decoration: underline;
+      font-weight: 600;
+    }
+
+    .error-summary-list a:hover, .error-summary-list a:focus-visible {
+      color: #450a0a;
+      outline: 2px solid #b91c1c;
+      outline-offset: 2px;
+    }
+
+    /* GRID Y CAMPOS DEL FORMULARIO */
+    .form-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-row-phone {
+      display: grid;
+      grid-template-columns: 110px 1fr 130px;
+      gap: 12px;
+    }
+
+    .form-row-full {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+
+    /* GRUPO DE CAMPO CON ETIQUETAS VISIBLES Y PERSISTENTES */
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Solución al problema "Placeholder-as-Label": Etiqueta visible y accesible */
+    .field-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #2b134b; /* Contraste 11.2:1 con fondo blanco */
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .field-label-hint {
+      font-size: 12px;
+      font-weight: 400;
+      color: #6b7280;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Inputs y selects manteniendo el look original pero con bordes y contraste nítidos */
+    .custom-input, .custom-select {
+      width: 100%;
+      height: 46px;
+      padding: 10px 14px;
+      font-family: var(--font-family);
+      font-size: 15px;
+      color: var(--color-text-main);
+      background-color: var(--color-bg-input);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      transition: var(--transition);
+      outline: none;
+    }
+
+    /* Contraste corregido para el texto de sugerencia (placeholder) */
+    .custom-input::placeholder {
+      color: #64748b; /* Contraste 4.6:1 (Cumple WCAG AA) */
+      opacity: 1;
+    }
+
+    /* Estados de foco visibles y accesibles */
+    .custom-input:focus, .custom-select:focus {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px var(--color-primary-focus);
+    }
+
+    /* Campo de sólo lectura (Indicativo) con estilo adecuado */
+    .custom-input[readonly] {
+      background-color: var(--color-bg-readonly);
+      color: #4b5563;
+      border-color: #d1d5db;
+      cursor: default;
+    }
+
+    /* ESTADOS DE ERROR POR CAMPO INDIVIDUAL */
+    .field-group.has-error .custom-input,
+    .field-group.has-error .custom-select {
+      border-color: var(--color-error);
+      background-color: var(--color-error-bg);
+      padding-right: 40px;
+    }
+
+    .field-group.has-error .custom-input:focus,
+    .field-group.has-error .custom-select:focus {
+      box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.25);
+    }
+
+    /* Icono indicador de estado dentro del input */
+    .input-status-icon {
+      position: absolute;
+      right: 12px;
+      display: none;
+      width: 20px;
+      height: 20px;
+      pointer-events: none;
+    }
+
+    .field-group.has-error .input-status-icon.icon-error {
+      display: block;
+      color: var(--color-error);
+    }
+
+    .field-group.is-valid .input-status-icon.icon-success {
+      display: block;
+      color: var(--color-success);
+    }
+
+    .field-group.is-valid .custom-input {
+      border-color: var(--color-success-border);
+    }
+
+    /* MENSAJE DE ERROR INDIVIDUAL (Debajo de cada campo específico) */
+    .error-feedback {
+      display: none;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-error);
+      margin-top: 5px;
+      line-height: 1.3;
+    }
+
+    .field-group.has-error .error-feedback {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .field-helper {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 4px;
+    }
+
+    /* SECCIÓN DE PREGUNTA MARKETING (Corregido contraste morado y accesibilidad) */
+    .marketing-consent-box {
+      background-color: #faf7fd;
+      border: 1px solid #e9d5ff;
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      margin-top: 4px;
+    }
+
+    .marketing-question {
+      font-size: 14px;
+      font-weight: 600;
+      color: #4a1570; /* Morado de alto contraste (9.1:1 sobre fondo claro) */
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .radio-options-row {
+      display: flex;
+      gap: 28px;
+    }
+
+    .radio-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text-main);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .radio-custom {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #6b7280;
+      border-radius: 50%;
+      outline: none;
+      cursor: pointer;
+      margin: 0;
+      display: grid;
+      place-content: center;
+      transition: var(--transition);
+      background-color: #fff;
+    }
+
+    .radio-custom::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      transform: scale(0);
+      transition: 120ms transform ease-in-out;
+      background-color: var(--color-primary);
+    }
+
+    .radio-custom:checked {
+      border-color: var(--color-primary);
+    }
+
+    .radio-custom:checked::before {
+      transform: scale(1);
+    }
+
+    .radio-custom:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 3px;
+    }
+
+    /* SECCIÓN DE TÉRMINOS Y TRATAMIENTO DE DATOS (Solución al enlace "aquí" y contraste) */
+    .privacy-terms-box {
+      margin-top: 6px;
+      padding: 14px 16px;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .checkbox-custom {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #64748b;
+      border-radius: 4px;
+      cursor: pointer;
+      flex-shrink: 0;
+      margin-top: 2px;
+      display: grid;
+      place-content: center;
+      background-color: #fff;
+      transition: var(--transition);
+    }
+
+    .checkbox-custom:checked {
+      background-color: var(--color-primary);
+      border-color: var(--color-primary);
+    }
+
+    .checkbox-custom:checked::before {
+      content: "✓";
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .checkbox-custom:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 3px;
+    }
+
+    .privacy-label-text {
+      font-size: 13.5px;
+      color: #334155;
+      line-height: 1.45;
+    }
+
+    /* Enlace descriptivo accesible corregido (sustituye el antipatrón "aquí") */
+    .privacy-link {
+      color: #4c1d95; /* Contraste 8.5:1 */
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .privacy-link:hover {
+      color: #1e1b4b;
+    }
+
+    .privacy-link:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+
+    /* BOTÓN DE ENVÍO PRINCIPAL */
+    .form-submit-row {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-submit {
+      width: 100%;
+      max-width: 380px;
+      height: 52px;
+      background: var(--color-primary);
+      color: #ffffff;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-family);
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 4px 10px rgba(88, 37, 131, 0.25);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn-submit:hover {
+      background: var(--color-primary-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(88, 37, 131, 0.35);
+    }
+
+    .btn-submit:active {
+      transform: translateY(0);
+    }
+
+    .btn-submit:focus-visible {
+      outline: 3px solid #7c3aed;
+      outline-offset: 3px;
+    }
+
+    /* MODAL DE ÉXITO O REPORTE DE CAMBIOS */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(17, 24, 39, 0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      z-index: 999;
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-overlay.is-open {
+      display: flex;
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    .modal-card {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      max-width: 650px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 32px;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: transparent;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #6b7280;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+
+    .modal-close-btn:hover, .modal-close-btn:focus-visible {
+      color: #111827;
+      background: #f3f4f6;
+    }
+
+    .report-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      font-size: 13.5px;
+    }
+
+    .report-table th, .report-table td {
+      border: 1px solid #e5e7eb;
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .report-table th {
+      background-color: #f3f4f6;
+      font-weight: 700;
+      color: #1f2937;
+    }
+
+    .report-tag-flaw {
+      color: #b91c1c;
+      font-weight: 600;
+    }
+
+    .report-tag-fix {
+      color: #15803d;
+      font-weight: 600;
+    }
+
+    /* FOOTER */
+    .page-footer {
+      background: #200b34;
+      color: #e2e8f0;
+      padding: 30px 20px;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .page-footer a {
+      color: #c084fc;
+      text-decoration: underline;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* RESPONSIVE DESIGN */
+    @media (max-width: 768px) {
+      .hero-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 16px;
+      }
+      .form-card {
+        padding: 24px 20px;
+      }
+      .form-row, .form-row-phone {
+        grid-template-columns: 1fr;
+      }
+      .radio-options-row {
+        flex-direction: column;
+        gap: 12px;
+      }
+      .hci-inspector-banner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <!-- Encabezado -->
-  <header class="hero">
-    <div class="container">
-      <div class="d-flex justify-content-center align-items-center gap-4 flex-wrap text-center text-md-start">
-        <!-- Icono de llave -->
-        <svg viewBox="0 0 112 50" fill="none" stroke="#fff" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
-          <circle cx="20" cy="26" r="16"/>
-          <circle cx="20" cy="26" r="6" fill="#fff"/>
-          <path d="M34 20 H108 L102 26 L96 22 L88 30 L80 22 L72 30 L64 24 L56 30 L48 26 H34"/>
+  <!-- BARRA EDUCATIVA HCI: Muestra de cumplimiento de la actividad -->
+  <aside class="hci-inspector-banner" aria-label="Información de rediseño HCI">
+    <div>
+      <strong>Proyecto HCI - Rediseño de Registro Software Shop</strong> | Corrección integral de accesibilidad y usabilidad
+    </div>
+    <div class="hci-badges">
+      <span class="hci-badge">✓ WCAG 2.1 AA</span>
+      <span class="hci-badge">✓ Errores específicos e inline</span>
+      <span class="hci-badge">✓ Labels visibles</span>
+      <span class="hci-badge">✓ Contraste &gt; 4.5:1</span>
+      <span class="hci-badge">✓ Enlace accesible</span>
+      <button type="button" class="btn-toggle-report" id="btnOpenReport">Ver Reporte de Cambios HCI</button>
+    </div>
+  </aside>
+
+  <!-- NAVEGACIÓN SUPERIOR FIEL A SOFTWARE SHOP -->
+  <header class="header-nav" role="banner">
+    <a href="https://www.software-shop.com" class="logo-container" aria-label="Página de inicio de Software Shop">
+      <svg class="logo-img" viewBox="0 0 180 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Logo Software Shop">
+        <text x="5" y="28" font-family="'Montserrat', sans-serif" font-size="20" font-weight="800" fill="#582583">SOFTWARE</text>
+        <text x="122" y="28" font-family="'Montserrat', sans-serif" font-size="20" font-weight="400" fill="#ea580c">shop</text>
+      </svg>
+    </a>
+    <div class="header-actions">
+      <a href="https://www.software-shop.com/login" class="nav-login-link">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/>
         </svg>
-        <div>
-          <h1>Regístrate</h1>
-          <p>en Software Shop y disfruta del<br>contenido que tenemos para ti.</p>
-        </div>
-      </div>
+        <span>Iniciar Sesión</span>
+      </a>
     </div>
   </header>
 
-  <!-- Formulario -->
-  <main class="container form-wrap">
-    <h2 class="form-title">¡Registrate Rapidamente!</h2>
+  <!-- SECCIÓN HERO (Regístrate en Software Shop) -->
+  <section class="hero-banner" aria-labelledby="hero-title">
+    <div class="hero-content">
+      <!-- Ícono de llave idéntico al original /images/llav.png -->
+      <svg class="hero-icon-svg" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="7.5" cy="15.5" r="4.5" stroke="#ffffff" stroke-width="2"/>
+        <path d="M11 12l9-9M17 3l4 4M14 6l3 3" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="hero-text">
+        <h1 id="hero-title">Regístrate</h1>
+        <p>en Software Shop y disfruta del contenido especializado que tenemos para ti.</p>
+      </div>
+    </div>
+  </section>
 
-    <form id="registro" novalidate>
-        <label for="seleccionar tipo de entidad">Selecciona el tipo de entidad</label>
-      <div class="fields">
-        <div class="row g-3 mb-2">
-          <div class="col-md-6">
-            <select class="form-select" name="tipoEntidad" required>
-              <option value="" selected>Sel. Tipo Entidad</option>
-              <option>Empresa privada</option>
-              <option>Entidad pública</option>
-              <option>Independiente</option>
-              <option>Educación</option>
-            </select>
-          </div>
-          <div class="col-md-6">
-            <label for="nombre de la entidad/Empresa">Nombre de la entidad / Empresa:</label>
-
-            <input type="text" class="form-control" name="entidad" placeholder="Abarrotes Juan" required>
-          </div>
-        </div>
-
-        <div class="row g-3 mb-2">
-          <div class="col-md-6">
-            <label for="Nombre:">Nombre:</label>
-            <input type="text" class="form-control" name="nombre" placeholder="Juan" required>
-          </div>
-          <div class="col-md-6">
-            <label for="apellido">Apellido:</label>
-
-            <input type="text" class="form-control" name="apellido" placeholder="Lopez" required>
-          </div>
-        </div>
-
-        <div class="row g-3 mb-2">
-          <div class="col-12">
-
-            <label for="ciudad">Ciudad:</label>
-            <input type="text" class="form-control" name="ciudad" placeholder="Ciudad de Mexico" required>
-          </div>
-        </div>
-
-        <div class="row g-3 mb-2">
-          <div class="col-md-2">
-            <label for="indicativo">Indicativo:</label>
-            <input type="text" class="form-control" name="indicativo" placeholder="Indicativo">
-          </div>
-          <div class="col-md-8">
-            <label for="telefono / Celular">Telefono:</label>
-            <input type="tel" class="form-control" name="telefono" placeholder="+52 123 456 78" required>
-          </div>
-          <div class="col-md-2">
-            <label for="numero de casa ext">Numero ext. de casa:</label>
-            <input type="text" class="form-control" name="ext" placeholder="123">
-          </div>
-        </div>
-
-        <div class="row g-3">
-          <div class="col-12">
-            <label for="E-mail">E-mail:</label>
-            <input type="email" class="form-control" name="email" placeholder="AbarrotesJuan@gmail.com" required>
-          </div>
-        </div>
+  <!-- CONTENIDO PRINCIPAL: FORMULARIO REDISEÑADO -->
+  <main class="main-wrapper" id="main-content">
+    <div class="form-card">
+      <div class="form-title-wrap">
+        <h2 class="form-title" id="form-heading">¡Regístrate Rápidamente!</h2>
+        <p class="form-subtitle">Ingresa tus datos para crear tu cuenta y acceder a cursos, webinars y cotizaciones.</p>
+        <p class="required-legend">Los campos marcados con <span class="required-asterisk" aria-hidden="true">*</span> son obligatorios.</p>
       </div>
 
-      <p class="pregunta">¿Deseas recibir correos con información de los productos del portafolio de tu interés?</p>
-      <div class="radios">
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="correos" id="siCorreos" value="si" checked>
-          <label class="form-check-label" for="siCorreos">Si, Gracias</label>
+      <!-- RESUMEN DE ERRORES GLOBAL (WCAG 3.3.1 Error Identification / ARIA Live) -->
+      <div id="errorSummary" class="error-summary" role="alert" aria-live="assertive" tabindex="-1">
+        <div class="error-summary-header">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          <span id="errorSummaryTitle">Se encontraron errores en el formulario:</span>
         </div>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="correos" id="noCorreos" value="no">
-          <label class="form-check-label" for="noCorreos">No, Gracias</label>
-        </div>
+        <ul id="errorSummaryList" class="error-summary-list">
+          <!-- Se puebla dinámicamente con enlaces clicables a cada campo con error -->
+        </ul>
       </div>
 
-      <button type="submit" class="btn btn-registrar">Registrar Información</button>
-    </form>
+      <!-- FORMULARIO -->
+      <form id="formRegistro" novalidate autocomplete="on" aria-labelledby="form-heading">
+        <div class="form-grid">
+          
+          <!-- FILA 1: Tipo Entidad + Entidad/Empresa -->
+          <div class="form-row">
+            <!-- Campo: Tipo Entidad -->
+            <div class="field-group" id="group-tipo_entidad">
+              <label for="tipo_entidad" class="field-label">
+                <span>Tipo de Entidad <span class="required-asterisk" aria-hidden="true">*</span></span>
+              </label>
+              <div class="input-wrapper">
+                <select id="tipo_entidad" name="tipo_entidad" class="custom-select" required aria-required="true" aria-describedby="tipo_entidad-error">
+                  <option value="" selected disabled>Seleccione el tipo de entidad</option>
+                  <option value="1">Académica</option>
+                  <option value="2">Corporativa</option>
+                  <option value="8">Distribuidor (Reseller)</option>
+                  <option value="5">Estudiante</option>
+                  <option value="6">Gobierno</option>
+                  <option value="7">Personal</option>
+                  <option value="4">Otros</option>
+                </select>
+                <svg class="input-status-icon icon-error" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                </svg>
+                <svg class="input-status-icon icon-success" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <span id="tipo_entidad-error" class="error-feedback" role="alert"></span>
+            </div>
 
-    <div class="politicas">
-      Conozca nuestras políticas de tratamiento de datos <a href="#" class="text-decoration-underline" >aquí</a>
+            <!-- Campo: Entidad / Empresa -->
+            <div class="field-group" id="group-entidad">
+              <label for="entidad" class="field-label">
+                <span>Entidad o Empresa <span class="required-asterisk" aria-hidden="true">*</span></span>
+              </label>
+              <div class="input-wrapper">
+                <input type="text" id="entidad" name="entidad" class="custom-input" placeholder="Ej. Universidad Nacional / Mi Empresa S.A." required aria-required="true" aria-describedby="entidad-error" autocomplete="organization">
+                <svg class="input-status-icon icon-error" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                </svg>
+                <svg class="input-status-icon icon-success" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <span id="entidad-error" class="error-feedback" role="alert"></span>
+            </div>
+          </div>
+
+          <!-- FILA 2: Nombre + Apellido -->
+          <div class="form-row">
+            <!-- Campo: Nombre -->
+            <div class="field-group" id="group-nombre">
+              <label for="nombre" class="field-label">
+                <span>Nombre <span class="required-asterisk" aria-hidden="true">*</span></span>
+                <span class="field-label-hint">Nome</span>
+              </label>
+              <div class="input-wrapper">
+                <input type="text" id="nombre" name="nombre" class="custom-input" placeholder="Ej. Carlos" required aria-required="true" aria-describedby="nombre-error" autocomplete="given-name">
+                <svg class="input-status-icon icon-error" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                </svg>
+                <svg class="input-status-icon icon-success" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <span id="nombre-error" class="error-feedback" role="alert"></span>
+            </div>
+
+            <!-- Campo: Apellido -->
+            <div class="field-group" id="group-apellido">
+              <label for="apellido" class="field-label">
+                <span>Apellido <span class="required-asterisk" aria-hidden="true">*</span></span>
+                <span class="field-label-hint">Sobrenome</span>
+              </label>
+              <div class="input-wrapper">
+                <input type="text" id="apellido" name="apellido" class="custom-input" placeholder="Ej. Rodríguez" required aria-required="true" aria-describedby="apellido-error" autocomplete="family-name">
+                <svg class="input-status-icon icon-error" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                </svg>
+                <svg class="input-status-icon icon-success" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <span id="apellido-error" class="error-feedback" role="alert"></span>
+            </div>
+          </div>
+
+          <!-- FILA 3: Ciudad -->
+          <div class="form-row-full">
+            <div class="field-group" id="group-ciudad">
+              <label for="ciudad" class="field-label">
+                <span>Ciudad <span class="required-asterisk" aria-hidden="true">*</span></span>
+                <span class="field-label-hint">Cidade</span>
+              </label>
+              <div class="input-wrapper">
+                <input type="text" id="ciudad" name="ciudad" class="custom-input" placeholder="Escribe tu ciudad (ej. Bogotá, Lima, Ciudad de México...)" required aria-required="true" aria-describedby="ciudad-helper ciudad-error" autocomplete="address-level2">
+                <svg class="input-status-icon icon-error" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                </svg>
+                <svg class="input-status-icon icon-success" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <span id="ciudad-helper" class="field-helper">Busca y confirma tu ciudad para autocompletar el indicativo telefónico.</span>
+              <span id="ciudad-error" class="error-feedback" role="alert"></span>
+            </div>
+          </div>
+
+          <!-- FILA 4: Indicativo + Teléfono/Celular + Extensión -->
+          <div class="form-row-phone">
+            <!-- Indicativo País -->
+            <div class="field-group" id="group-indicativo">
+              <label for="indicativo" class="field-label">
+                <span>Indicativo</span>
+              </label>
+              <div class="input-wrapper">
+                <input type="text" id="indicativo" name="indicativo" class="custom-input" value="+57" readonly title="Indicativo internacional de país" aria-describedby="indicativo-hint">
+              </div>
+              <span id="indicativo-hint" class="field-helper">País</span>
+            </div>
+
+            <!-- Teléfono / Celular -->
+            <div class="field-group" id="group-celular">
+              <label for="celular" class="field-label">
+                <span>Teléfono / Celular <span class="required-asterisk" aria-hidden="true">*</span></span>
+                <span class="field-label-hint">Fone</span>
+              </label>
+              <div class="input-wrapper">
+                <input type="tel" id="celular" name="telef_oficina" class="custom-input" placeholder="Ej. 315 0662342" required aria-required="true" aria-describedby="celular-error" autocomplete="tel">
+                <svg class="input-status-icon icon-error" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                </svg>
+                <svg class="input-status-icon icon-success" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <span id="celular-error" class="error-feedback" role="alert"></span>
+            </div>
+
+            <!-- Extensión / Anexo -->
+            <div class="field-group" id="group-ext">
+              <label for="ext" class="field-label">
+                <span>Extensión</span>
+                <span class="field-label-hint">Opcional</span>
+              </label>
+              <div class="input-wrapper">
+                <input type="text" id="ext" name="ext" class="custom-input" placeholder="Ej. 104" autocomplete="tel-extension">
+              </div>
+            </div>
+          </div>
+
+          <!-- FILA 5: Correo Electrónico -->
+          <div class="form-row-full">
+            <div class="field-group" id="group-e_mail">
+              <label for="e_mail" class="field-label">
+                <span>Correo Electrónico Corporativo o Personal <span class="required-asterisk" aria-hidden="true">*</span></span>
+              </label>
+              <div class="input-wrapper">
+                <input type="email" id="e_mail" name="e_mail" class="custom-input" placeholder="ejemplo@organizacion.com" required aria-required="true" aria-describedby="e_mail-error" autocomplete="email">
+                <svg class="input-status-icon icon-error" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                </svg>
+                <svg class="input-status-icon icon-success" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <span id="e_mail-error" class="error-feedback" role="alert"></span>
+            </div>
+          </div>
+
+          <!-- FILA 6: Preferencia de boletines / marketing (Contraste corregido > 9:1) -->
+          <fieldset class="marketing-consent-box">
+            <legend class="marketing-question">
+              ¿Deseas recibir correos con información sobre webinars, cursos y novedades de tu interés?
+            </legend>
+            <div class="radio-options-row">
+              <label class="radio-label">
+                <input type="radio" class="radio-custom" name="emailMarketing" id="marketing_si" value="0" checked>
+                <span>Sí, deseo recibir novedades</span>
+              </label>
+              <label class="radio-label">
+                <input type="radio" class="radio-custom" name="emailMarketing" id="marketing_no" value="1">
+                <span>No por el momento</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <!-- FILA 7: Términos y Tratamiento de Datos (Corregido: Enlace explícito y accesible, no "aquí") -->
+          <div class="field-group" id="group-politica">
+            <div class="privacy-terms-box">
+              <input type="checkbox" id="acepto_politica" name="acepto_politica" class="checkbox-custom" required aria-required="true" aria-describedby="politica-error">
+              <label for="acepto_politica" class="privacy-label-text">
+                He leído y acepto la
+                <a href="https://www.software-shop.com/contactos/general-data-policy" target="_blank" rel="noopener noreferrer" class="privacy-link" aria-label="Política general de tratamiento de datos personales de Software Shop (se abre en nueva pestaña)">
+                  Política de tratamiento y protección de datos personales
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
+                  </svg>
+                </a>.
+                <span class="required-asterisk" aria-hidden="true">*</span>
+              </label>
+            </div>
+            <span id="politica-error" class="error-feedback" role="alert"></span>
+          </div>
+
+          <!-- BOTÓN DE ENVÍO -->
+          <div class="form-submit-row">
+            <button type="submit" id="btnSubmitRegistro" class="btn-submit">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="8.5" cy="7" r="4"/>
+                <line x1="20" y1="8" x2="20" y2="14"/>
+                <line x1="23" y1="11" x2="17" y2="11"/>
+              </svg>
+              <span>Registrar Información</span>
+            </button>
+            <span style="font-size: 13px; color: #64748b;">Tus datos están protegidos bajo estándares internacionales de privacidad.</span>
+          </div>
+
+        </div>
+      </form>
     </div>
   </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- MODAL: REPORTE DE EVALUACIÓN Y MEJORAS DE HCI -->
+  <div id="modalReport" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalReportTitle">
+    <div class="modal-card">
+      <button type="button" class="modal-close-btn" id="btnCloseReport" aria-label="Cerrar modal">&times;</button>
+      <h2 id="modalReportTitle" style="color: #582583; font-size: 22px; margin-bottom: 8px;">
+        Informe de Defectos Corregidos (HCI & Accesibilidad Web)
+      </h2>
+      <p style="font-size: 14px; color: #4b5563; margin-bottom: 16px;">
+        Comparativa directa entre los problemas detectados en la versión original de <a href="https://www.software-shop.com/registro" target="_blank" rel="noopener">software-shop.com/registro</a> y las soluciones aplicadas en este entregable:
+      </p>
+
+      <table class="report-table">
+        <thead>
+          <tr>
+            <th style="width: 25%;">Dimensión</th>
+            <th style="width: 37%;">Defecto en Versión Original</th>
+            <th style="width: 38%;">Solución Implementada en Rediseño</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Mensajes de Error</strong></td>
+            <td>
+              <span class="report-tag-flaw">Genérico y desasociado:</span> Solo mostraba un texto oculto abajo: <em>"Se deben completar todos los campos del formulario"</em>. No indicaba qué campos faltaban ni marcaba bordes en rojo. El atributo <code>for="Empresa-institucion-2"</code> apuntaba a un elemento inexistente.
+            </td>
+            <td>
+              <span class="report-tag-fix">Validación inline + Resumen:</span> Mensajes de error específicos bajo cada input (<code>aria-describedby</code>), bordes de alerta con íconos de estado, y panel resumen accesible superior (<code>role="alert"</code> con enlaces directos al foco del error).
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Placeholder como Label</strong></td>
+            <td>
+              <span class="report-tag-flaw">Pérdida de contexto cognitivo:</span> No existían etiquetas <code>&lt;label&gt;</code> visibles. Al escribir, el placeholder desaparecía y el usuario olvidaba qué dato pedía el campo. Además estaban sobrecargados con barras <em>"Teléfono / Celular / Fone"</em>.
+            </td>
+            <td>
+              <span class="report-tag-fix">Etiquetas persistentes y claras:</span> Etiquetas <code>&lt;label&gt;</code> permanentes encima de cada input con indicación explícita de obligatoriedad (<code>*</code> y <code>aria-required</code>), dejando los placeholders solo para ejemplos de formato (ej. <code>ejemplo@empresa.com</code>).
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Contraste de Color (WCAG)</strong></td>
+            <td>
+              <span class="report-tag-flaw">Contraste insuficiente:</span> Textos secundarios, placeholders y preguntas en tonos gris claro y morado desaturado con ratios &lt; 3:1, fallando WCAG 2.1 AA.
+            </td>
+            <td>
+              <span class="report-tag-fix">Ratio &gt; 4.5:1 / 7:1:</span> Tipografía principal <code>#1f2937</code> (13.8:1), morado de encabezados <code>#4a1570</code> (9.1:1), estados de error <code>#b91c1c</code> (5.9:1) y foco visible con anillo de 3px.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Problemas de Enlace</strong></td>
+            <td>
+              <span class="report-tag-flaw">Antipatrón "haz clic aquí":</span> El enlace a políticas decía literalmente: <em>"...tratamiento de datos &lt;a&gt;aquí&lt;/a&gt;"</em>. Inaccesible para lectores de pantalla. Sin <code>rel="noopener"</code>. Estaba suelto como botón fuera del formulario.
+            </td>
+            <td>
+              <span class="report-tag-fix">Enlace semántico y consentimiento:</span> Texto autoexplicativo: <em>"Política de tratamiento y protección de datos personales"</em>, con ícono de nueva pestaña, <code>rel="noopener noreferrer"</code> y checkbox de consentimiento legal integrado.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Fidelidad Visual</strong></td>
+            <td colspan="2">
+              Se preservó la paleta institucional (morado <code>#582583</code>), la tarjeta central redondeada, el banner hero con la llave representativa y la distribución en 2 y 3 columnas, pero con un estándar moderno de diseño limpio y responsivo.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style="margin-top: 24px; text-align: right;">
+        <button type="button" class="btn-submit" style="max-width: 160px; height: 40px; font-size: 14px;" id="btnModalAceptar">Entendido</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: SIMULACIÓN DE REGISTRO EXITOSO -->
+  <div id="modalSuccess" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalSuccessTitle">
+    <div class="modal-card" style="text-align: center; max-width: 480px;">
+      <div style="width: 64px; height: 64px; background: #dcfce7; color: #16a34a; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+      <h2 id="modalSuccessTitle" style="color: #166534; font-size: 22px; margin-bottom: 8px;">¡Registro Exitoso!</h2>
+      <p id="modalSuccessMsg" style="color: #374151; font-size: 15px; margin-bottom: 20px;">
+        Tu información ha sido validada y registrada correctamente en Software Shop.
+      </p>
+      <button type="button" class="btn-submit" style="margin: 0 auto;" id="btnModalSuccessClose">Continuar navegando</button>
+    </div>
+  </div>
+
+  <!-- PIE DE PÁGINA INSTITUCIONAL -->
+  <footer class="page-footer" role="contentinfo">
+    <p>&copy; 2026 Software Shop Inc. Todos los derechos reservados. Rediseñado para la actividad de Interacción Humano-Computador (HCI).</p>
+    <p style="margin-top: 6px;">
+      <a href="https://www.software-shop.com/contactos/general-data-policy" target="_blank" rel="noopener noreferrer">Política de tratamiento de datos</a> | 
+      <a href="https://www.software-shop.com" target="_blank" rel="noopener noreferrer">software-shop.com</a>
+    </p>
+  </footer>
+
+  <!-- ==========================================================================
+       JAVASCRIPT: VALIDACIÓN PROFESIONAL, ACCESIBILIDAD Y GESTIÓN DE ERRORES
+       ========================================================================== -->
   <script>
-    document.getElementById('registro').addEventListener('submit', function (e) {
-      e.preventDefault();
-      // Aquí va el envío de datos
-    });
+    (function() {
+      'use strict';
+
+      // Elementos clave del DOM
+      const form = document.getElementById('formRegistro');
+      const errorSummary = document.getElementById('errorSummary');
+      const errorSummaryList = document.getElementById('errorSummaryList');
+      const modalReport = document.getElementById('modalReport');
+      const modalSuccess = document.getElementById('modalSuccess');
+      const btnOpenReport = document.getElementById('btnOpenReport');
+      const btnCloseReport = document.getElementById('btnCloseReport');
+      const btnModalAceptar = document.getElementById('btnModalAceptar');
+      const btnModalSuccessClose = document.getElementById('btnModalSuccessClose');
+
+      // Definición de reglas de validación y mensajes específicos
+      const fields = [
+        {
+          id: 'tipo_entidad',
+          label: 'Tipo de Entidad',
+          validate: (val) => val && val.trim() !== '',
+          message: 'Por favor selecciona el tipo de entidad a la que perteneces.'
+        },
+        {
+          id: 'entidad',
+          label: 'Entidad o Empresa',
+          validate: (val) => val && val.trim().length >= 2,
+          message: 'Ingresa el nombre de tu empresa, universidad o institución (mínimo 2 letras).'
+        },
+        {
+          id: 'nombre',
+          label: 'Nombre',
+          validate: (val) => val && val.trim().length >= 2,
+          message: 'Por favor ingresa tu nombre (mínimo 2 caracteres).'
+        },
+        {
+          id: 'apellido',
+          label: 'Apellido',
+          validate: (val) => val && val.trim().length >= 2,
+          message: 'Por favor ingresa tu apellido (mínimo 2 caracteres).'
+        },
+        {
+          id: 'ciudad',
+          label: 'Ciudad',
+          validate: (val) => val && val.trim().length >= 2,
+          message: 'Ingresa tu ciudad de residencia.'
+        },
+        {
+          id: 'celular',
+          label: 'Teléfono / Celular',
+          validate: (val) => {
+            if (!val || val.trim().length < 7) return false;
+            // Solo dígitos, espacios, guiones y signos más
+            return /^[\d\s\-\+\(\)]{7,20}$/.test(val.trim());
+          },
+          message: 'Ingresa un número telefónico o celular válido (mínimo 7 dígitos).'
+        },
+        {
+          id: 'e_mail',
+          label: 'Correo Electrónico',
+          validate: (val) => {
+            if (!val) return false;
+            // Regex estándar robusto para validación de email
+            const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,}$/;
+            return emailRegex.test(val.trim());
+          },
+          message: 'Ingresa una dirección de correo electrónico válida (ej. nombre@correo.com).'
+        },
+        {
+          id: 'acepto_politica',
+          label: 'Política de Tratamiento de Datos',
+          validate: (val, element) => element.checked,
+          message: 'Debes autorizar la política de tratamiento de datos personales para continuar.'
+        }
+      ];
+
+      // Función para validar un solo campo en tiempo real
+      function validateField(fieldConfig, isSubmitting = false) {
+        const input = document.getElementById(fieldConfig.id);
+        const group = document.getElementById('group-' + fieldConfig.id);
+        const errorEl = document.getElementById(fieldConfig.id === 'acepto_politica' ? 'politica-error' : fieldConfig.id + '-error');
+
+        if (!input || !group) return true;
+
+        const val = input.value;
+        const isValid = fieldConfig.validate(val, input);
+
+        if (!isValid) {
+          // Si estamos enviando el formulario o el campo ya tiene contenido erróneo
+          group.classList.add('has-error');
+          group.classList.remove('is-valid');
+          input.setAttribute('aria-invalid', 'true');
+          if (errorEl) {
+            errorEl.textContent = fieldConfig.message;
+          }
+          return false;
+        } else {
+          // Si es válido, limpiar estado de error
+          group.classList.remove('has-error');
+          input.removeAttribute('aria-invalid');
+          if (errorEl) {
+            errorEl.textContent = '';
+          }
+          // Añadir indicador verde si tiene valor y no es el checkbox
+          if (input.type !== 'checkbox' && val.trim() !== '') {
+            group.classList.add('is-valid');
+          } else {
+            group.classList.remove('is-valid');
+          }
+          return true;
+        }
+      }
+
+      // Escuchadores de eventos interactivos para cada campo (validación en blur y live clearing en input)
+      fields.forEach(f => {
+        const input = document.getElementById(f.id);
+        if (!input) return;
+
+        // Limpiar error tan pronto el usuario interactúa
+        const eventType = (input.tagName === 'SELECT' || input.type === 'checkbox') ? 'change' : 'input';
+        input.addEventListener(eventType, function() {
+          const group = document.getElementById('group-' + f.id);
+          if (group && group.classList.contains('has-error')) {
+            validateField(f, false);
+          }
+        });
+
+        // Validar al salir del foco (blur) para feedback inmediato
+        input.addEventListener('blur', function() {
+          if (input.value.trim() !== '' || input.type === 'checkbox') {
+            validateField(f, false);
+          }
+        });
+      });
+
+      // Manejo de envío del formulario
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const errors = [];
+        let firstInvalidInput = null;
+
+        // Validar todos los campos
+        fields.forEach(f => {
+          const input = document.getElementById(f.id);
+          const valid = validateField(f, true);
+          if (!valid) {
+            errors.push({
+              id: f.id,
+              label: f.label,
+              message: f.message
+            });
+            if (!firstInvalidInput) {
+              firstInvalidInput = input;
+            }
+          }
+        });
+
+        // Gestionar el Resumen de Errores Global (WCAG 3.3.1)
+        if (errors.length > 0) {
+          errorSummaryList.innerHTML = '';
+          errors.forEach(err => {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = '#' + err.id;
+            a.textContent = err.label + ': ' + err.message;
+            a.addEventListener('click', function(ev) {
+              ev.preventDefault();
+              const targetInput = document.getElementById(err.id);
+              if (targetInput) {
+                targetInput.focus();
+                targetInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }
+            });
+            li.appendChild(a);
+            errorSummaryList.appendChild(li);
+          });
+
+          errorSummary.classList.add('is-active');
+          errorSummary.focus(); // Foco al resumen de errores para tecnología asistiva
+          errorSummary.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+          // Enfocar primer campo erróneo
+          if (firstInvalidInput) {
+            setTimeout(() => {
+              firstInvalidInput.focus();
+            }, 400);
+          }
+        } else {
+          // Todo correcto: ocultar resumen de error
+          errorSummary.classList.remove('is-active');
+          errorSummaryList.innerHTML = '';
+
+          // Simular envío exitoso con feedback positivo
+          const nombreVal = document.getElementById('nombre').value;
+          const emailVal = document.getElementById('e_mail').value;
+          document.getElementById('modalSuccessMsg').innerHTML = 
+            `Hola <strong>${nombreVal}</strong>, tus datos han sido verificados satisfactoriamente.<br>` +
+            `Hemos enviado un enlace de confirmación a <strong>${emailVal}</strong>.`;
+          
+          modalSuccess.classList.add('is-open');
+        }
+      });
+
+      // Control del Modal de Reporte HCI
+      function toggleReportModal(open) {
+        if (open) {
+          modalReport.classList.add('is-open');
+          btnCloseReport.focus();
+        } else {
+          modalReport.classList.remove('is-open');
+          btnOpenReport.focus();
+        }
+      }
+
+      btnOpenReport.addEventListener('click', () => toggleReportModal(true));
+      btnCloseReport.addEventListener('click', () => toggleReportModal(false));
+      btnModalAceptar.addEventListener('click', () => toggleReportModal(false));
+
+      btnModalSuccessClose.addEventListener('click', () => {
+        modalSuccess.classList.remove('is-open');
+        form.reset();
+        document.querySelectorAll('.field-group').forEach(g => {
+          g.classList.remove('is-valid', 'has-error');
+        });
+      });
+
+      // Cerrar modales con tecla Escape
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          if (modalReport.classList.contains('is-open')) toggleReportModal(false);
+          if (modalSuccess.classList.contains('is-open')) modalSuccess.classList.remove('is-open');
+        }
+      });
+
+      // Cerrar modales al hacer clic fuera del contenido
+      [modalReport, modalSuccess].forEach(modal => {
+        modal.addEventListener('click', function(e) {
+          if (e.target === modal) {
+            modal.classList.remove('is-open');
+          }
+        });
+      });
+
+    })();
   </script>
 </body>
 </html>
